@@ -65,7 +65,28 @@ class SetPermission {
   }
 }
 
+class Check extends SetPermission {
+  if(role) {
+    super.a(role);
+    return this;
+  }
+
+  from(endpoint) {
+    this._endpoint = endpoint;
+    const permissionRef = acl._roles[this._role][this._http_verb][0] || false;
+    if (endpoint.split('/').filter(val => val).length <= 1) {
+      return permissionRef.endpoint === endpoint;
+    }
+    return this;
+  }
+
+  to(endpoint) {
+    return this.from(endpoint);
+  }
+}
+
 const a = arg => new SetPermission().a(arg);
+const check = new Check();
 
 export default acl;
-export { a, a as an };
+export { a, a as an, check };
