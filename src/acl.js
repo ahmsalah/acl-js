@@ -29,18 +29,19 @@ class SetPermission {
   a(role) {
     // check if the role was created, if not throw an error
     if (!acl._roles[role])
-      throw new Error(`Role ${role} does not exist! create it using createRole`);
+      throw new TypeError(`Role "${role}" does not exist! create it using "createRole".`);
 
     this._role = role;
     return this;
   }
 
   can(http_verb) {
-    // check if the argument is a supported http verb
-    if (!acl._http_verbs.includes(http_verb))
-      throw new Error(`Argument passed to can() must be a valid http verb`);
-
     this._http_verb = http_verb.toLowerCase();
+
+    // check if the argument is a supported http verb
+    if (!acl._http_verbs.includes(this._http_verb))
+      throw new TypeError(`"${http_verb}" is not a supported http verb, please enter a valid one.`);
+
     return this;
   }
 
@@ -61,6 +62,13 @@ class SetPermission {
   }
 
   when(condition) {
+    this._condition = condition;
+
+    const newArr = acl._roles[this._role][this._http_verb].map(item =>
+      item.endpoint === this._endpoint ? { ...item, condition } : item,
+    );
+    acl._roles[this._role][this._http_verb] = newArr;
+
     return this;
   }
 }
