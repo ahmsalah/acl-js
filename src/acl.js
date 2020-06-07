@@ -14,14 +14,17 @@
    },
  };
  */
+
+import { validateArgumentType } from './utils';
+
 class acl {
   static _http_verbs = ['get', 'post', 'delete', 'patch', 'put'];
   static _roles = {};
 
   static createRole(role) {
-    console.log(`Adding ${role} to Roles`);
+    validateArgumentType(role, 'string', this.createRole.name);
+
     this._roles = { ...this._roles, [role]: {} };
-    console.log(this._roles);
   }
 }
 
@@ -46,6 +49,7 @@ class SetPermission {
   }
 
   from(endpoint) {
+    validateArgumentType(endpoint, 'string', this.from.name);
     this._endpoint = endpoint;
     const endpointsRef = acl._roles[this._role][this._http_verb];
     // override existing rules
@@ -62,6 +66,7 @@ class SetPermission {
   }
 
   when(condition) {
+    validateArgumentType(condition, 'function', this.when.name);
     this._condition = condition;
 
     const newArr = acl._roles[this._role][this._http_verb].map(item =>
@@ -80,6 +85,8 @@ class Check extends SetPermission {
   }
 
   from(endpoint) {
+    validateArgumentType(endpoint, 'string', this.from.name);
+
     this._endpointArr = endpoint.split('/').filter(val => val);
 
     if (this._endpointArr.length <= 1) {
@@ -94,6 +101,8 @@ class Check extends SetPermission {
   }
 
   when(params) {
+    validateArgumentType(params, 'object', this.when.name);
+
     const permission = acl._roles[this._role][this._http_verb].filter(
       item => item.endpoint.split('/').filter(val => val)[0] === this._endpointArr[0],
     )[0];
