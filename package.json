@@ -1,5 +1,5 @@
 {
-  "name": "acl-task",
+  "name": "acl-js",
   "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahmsalah/acl-task.git"
+    "url": "git+https://github.com/ahmsalah/acl-js.git"
   },
   "author": "Ahmed Salah",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ahmsalah/acl-task/issues"
+    "url": "https://github.com/ahmsalah/acl-js/issues"
   },
-  "homepage": "https://github.com/ahmsalah/acl-task#readme",
+  "homepage": "https://github.com/ahmsalah/acl-js#readme",
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
