@@ -80,11 +80,12 @@ class Check extends SetPermission {
   }
 
   from(endpoint) {
-    this._endpoint = endpoint;
-    const permissionRef = acl._roles[this._role][this._http_verb][0] || false;
-    if (endpoint.split('/').filter(val => val).length <= 1) {
-      return permissionRef.endpoint === endpoint;
+    this._endpointArr = endpoint.split('/').filter(val => val);
+
+    if (this._endpointArr.length <= 1) {
+      return !!acl._roles[this._role]?.[this._http_verb]?.some(item => item.endpoint === endpoint);
     }
+
     return this;
   }
 
