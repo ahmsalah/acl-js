@@ -92,6 +92,27 @@ class Check extends SetPermission {
   to(endpoint) {
     return this.from(endpoint);
   }
+
+  when(params) {
+    const permission = acl._roles[this._role][this._http_verb].filter(
+      item => item.endpoint.split('/').filter(val => val)[0] === this._endpointArr[0],
+    )[0];
+
+    this.paramsKey = permission.endpoint
+      .split('/')
+      .filter(item => item.includes(':'))[0]
+      .replace(':', '');
+
+    // check if the type of the argument passed to when is a number
+    const isNumber = typeof Object.values(params)[0] === 'number';
+
+    this.params = {};
+    this.params[this.paramsKey] = isNumber
+      ? parseInt(this._endpointArr[1], 10)
+      : this._endpointArr[1];
+
+    return permission.condition(this.params, params);
+  }
 }
 
 const a = arg => new SetPermission().a(arg);

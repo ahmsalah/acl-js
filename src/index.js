@@ -15,3 +15,5 @@ a('user')
 
 console.log(check.if('admin').can('get').from('/articles'));
 console.log(check.if('admin').can('get').from('/users'));
+console.log(check.if('user').can('post').to('/articles'));
+console.log(check.if('user').can('post').to('/users/10/articles').when({ id: 10 }));
