@@ -51,11 +51,24 @@ class SetPermission {
   from(endpoint) {
     validateArgumentType(endpoint, 'string', this.from.name);
     this._endpoint = endpoint;
-    const endpointsRef = acl._roles[this._role][this._http_verb];
-    // override existing rules
-    const existingEndpoints = endpointsRef?.filter(item => item.endpoint !== endpoint) || [];
+    const endpointArr = endpoint.split('/').filter(val => val);
+
+    /**
+     * - override existing rules:
+     * if a user sets a rule like so: a('user').can('post').to('/articles')
+     * then enters a another rule with a condition e.x. a('user').can('post').to('/users/:userId/articles').when(....)
+     * the first rule get overridden by the latter.
+     */
+    const existingEndpoints =
+      acl._roles[this._role][this._http_verb]?.filter(item => {
+        const currEndpointArr = item.endpoint.split('/').filter(val => val);
+        return endpointArr.length <= 1
+          ? currEndpointArr[0] !== endpointArr[0]
+          : currEndpointArr[0] !== endpointArr[2];
+      }) || [];
+
     acl._roles[this._role][this._http_verb] = [...existingEndpoints, { endpoint }];
-    console.log(acl._roles);
+
     return this;
   }
 
