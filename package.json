@@ -1,7 +1,7 @@
 {
-  "name": "acl-js",
+  "name": "@ahmsalah/acl-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "Access control lists javascript library",
   "main": "./lib/index.js",
   "scripts": {
     "start": "npm-run-all --parallel babel:watch dev",
@@ -15,7 +15,7 @@
     "url": "git+https://github.com/ahmsalah/acl-js.git"
   },
   "author": "Ahmed Salah",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ahmsalah/acl-js/issues"
   },
