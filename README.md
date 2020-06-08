@@ -41,8 +41,11 @@ a('user').can('get').from('/articles');
 
 ### Set permission
 
-`a` accepts a role, that was previously defined by `createRole`.
-`can` accepts one of the following http verbs: 'get', 'post', 'delete', 'patch', 'put'.
+`a` or `an` accepts a role, that was previously defined by `createRole`.
+
+`can` accepts one of the following http verbs: (get, post, delete, patch, put).
+
+`from` or `to` accepts an endpoint string.
 
 Please note that `a` is just an alias of `an` while `to` is an alias of `from`; so using either one of them doesn't affect the logic in any way.
 
